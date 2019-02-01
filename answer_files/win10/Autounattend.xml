@@ -37,10 +37,10 @@
 			</DiskConfiguration>
 			<UserData>
 				<AcceptEula>true</AcceptEula>
-				<FullName>Vagrant Administrator</FullName>
-				<Organization>Vagrant Inc.</Organization>
+				<FullName>Etienne Moreau</FullName>
+				<Organization>Elekta. Inc.</Organization>
 				<!-- Product Key from http://technet.microsoft.com/en-us/library/jj612867.aspx -->
-				<ProductKey>NPPR9-FWDCX-D2C8J-H872K-2YT43
+				<ProductKey>C6N38-CKR6J-43VRW-6XJV4-WFG44
 					<WillShowUI>Never</WillShowUI>
 				</ProductKey>
 			</UserData>
@@ -55,7 +55,7 @@
 					<InstallFrom>
 						<MetaData wcm:action="add">
 							<Key>/IMAGE/NAME</Key>
-							<Value>Windows 10 Enterprise Evaluation</Value>
+							<Value>Windows 10 Enterprise</Value>
 						</MetaData>
 					</InstallFrom>
 				</OSImage>

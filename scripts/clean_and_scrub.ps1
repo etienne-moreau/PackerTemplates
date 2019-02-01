@@ -14,6 +14,7 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
     "$env:windir\temp\*",
     "$env:windir\winsxs\manifestcache"
 ) | % {
+        Write-Host "Processing $_"
         if(Test-Path $_) {
             Write-Host "Removing $_"
             try {
@@ -21,6 +22,9 @@ Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
               Icacls $_ /GRANT:r administrators:F /T /c /q  2>&1 | Out-Null
               Remove-Item $_ -Recurse -Force | Out-Null
             } catch { $global:error.RemoveAt(0) }
+        }
+        else {
+            Write-Host "$_ does not exists"
         }
     }
 

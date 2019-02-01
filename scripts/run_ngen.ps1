@@ -3,4 +3,6 @@ Get-ScheduledTask '.NET Framework NGEN v4.0.30319','.NET Framework NGEN v4.0.303
 $ngen | Disable-ScheduledTask
 
 Write-Output "Running ngen.exe"
-. c:\Windows\Microsoft.NET\Framework64\v4.0.30319\ngen.exe executeQueuedItems
+. c:\Windows\Microsoft.NET\Framework64\v4.0.30319\ngen.exe executeQueuedItems /verbose
+
+Write-Output "Done running ngen"

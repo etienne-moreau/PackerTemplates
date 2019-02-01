@@ -32,7 +32,7 @@ $unattendedXML = @"
             <OOBE>
                 <HideEULAPage>true</HideEULAPage>
                 <ProtectYourPC>1</ProtectYourPC>
-                <NetworkLocation>Home</NetworkLocation>
+                <NetworkLocation>work</NetworkLocation>
                 <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
             </OOBE>
             <TimeZone>UTC</TimeZone>
@@ -54,10 +54,22 @@ $unattendedXML = @"
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>
+            <AutoLogon>
+                <Enabled>true</Enabled>
+                <Password>
+                    <Value>vagrant</Value>
+                    <PlainText>true</PlainText>
+                </Password>
+                <Username>vagrant</Username>
+            </AutoLogon>
         </component>
     </settings>
     <settings pass="specialize">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ComputerName>EQTVBase</ComputerName>
+        </component>
     </settings>
+    <cpi:offlineImage cpi:source="catalog:c:/_me/codatelier/3rdpartytools/packertemplates/autounattendcreation/install_windows 7 professional.clg" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>
 "@
 

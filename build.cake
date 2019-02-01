@@ -1,6 +1,6 @@
-#addin "Cake.Incubator"
-#addin "Cake.Yaml"
-#addin "YamlDotNet"
+#addin  nuget:?package=Cake.Incubator&version=3.1.0
+#addin nuget:?package=Cake.Yaml&version=3.0.0
+#addin nuget:?package=YamlDotNet&version=5.3.0
 
 // CLI Arguments For Cake Script
 var buildTarget = Argument("target", "virtualbox-local");
@@ -33,6 +33,7 @@ public OSToBuild LoadYAMLConfig(string yaml_path, string os)
     //OSToBuild os_to_build_properties;
     try
     {
+        Information("Loading YAML file" + os);
         var oses = DeserializeYamlFromFile<List<OSToBuild>> (yaml_path);
 
         // check if the OS the user passed exists
@@ -49,8 +50,9 @@ public OSToBuild LoadYAMLConfig(string yaml_path, string os)
             throw new System.ArgumentException(exceptionMsg);
         }
     }
-    catch
+    catch(System.Exception e)
     {
+        Information(e.ToString());
         throw new System.ArgumentException($"Your YAML file at {yaml_path} is invalid!");
     }
 }

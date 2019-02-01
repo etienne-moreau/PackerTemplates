@@ -37,6 +37,7 @@ The supported Operating Systems to build are:
 * Windows2012R2
 * Windows2016StdCore
 * Windows2016Std
+* Windows7Pro
 
 ### Pre-build Images
 
@@ -144,6 +145,28 @@ The following commands will build you VirtualBox Images
 
 # Builds Windows 2012 R2 Core and runs the Atlas post processor.
 ./build.sh --target "virtualbox-vagrant-cloud" -os="Win2012R2Core"
+```
+
+```powershell
+# Builds Windows 2016 Standard Core and runs the Vagrant post processor (local).
+./build.ps1 -target "virtualbox-local" --os="Windows2016StdCore"
+
+# Builds Windows 2012 R2 Core and runs the Atlas post processor.
+./build.ps1 -target "virtualbox-vagrant-cloud" --os="Win2012R2Core"
+
+# Builds Windows 10 Enterprise
+./build.ps1 -target "virtualbox-local" -os="Windows10"
+
+# Builds Windows 2012 7 pro X64
+./build.ps1 -target "virtualbox-vagrant-cloud" -os="Windows10"
+
+# Builds Windows 2016 Standard Core and runs the Vagrant post processor (local).
+./build.ps1 -target "virtualbox-local" -os="Windows7proX64"
+
+# Builds Windows 2012 R2 Core and runs the Atlas post processor.
+./build.ps1 -target "virtualbox-vagrant-cloud" -os="Windows7proX64"
+
+
 ```
 
 ## Using the Vagrant Images

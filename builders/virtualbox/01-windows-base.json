@@ -1,7 +1,35 @@
 {
+  "variables": {
+    "os_name": "",
+    "headless": "true",
+    "iso_checksum": "",
+    "iso_url": "",
+    "guest_os_type": ""
+  },
   "builders": [
     {
       "type": "virtualbox-iso",
+      "communicator": "winrm",
+      "disk_size": 81920,
+      "floppy_files": [
+        "answer_files/{{ user `os_name` }}/Autounattend.xml",
+        "floppy/update-windows.ps1",
+        "floppy/winrm.ps1"
+      ],
+      "guest_os_type": "{{ user `guest_os_type` }}",
+      "headless": "{{ user `headless` }}",
+      "iso_url": "{{ user `iso_url` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "sha1",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "winrm_insecure": true,
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "shutdown_timeout": "1h",
+      "guest_additions_mode": "attach",
+      "output_directory": "./output-{{ user `os_name` }}-base/",
+      "vm_name": "{{ user `os_name` }}-base",
       "vboxmanage": [
         [
           "modifyvm",
@@ -19,27 +47,8 @@
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "1"
+          "2"
         ]
-      ],
-      "disk_size": 81920,
-      "output_directory": "./output-{{ user `os_name` }}-base/",
-      "vm_name": "{{ user `os_name` }}-base",
-      "guest_additions_mode": "attach",
-      "guest_os_type": "{{ user `guest_os_type` }}",
-      "headless": "{{ user `headless` }}",
-      "iso_url": "{{ user `iso_url` }}",
-      "iso_checksum": "{{ user `iso_checksum` }}",
-      "iso_checksum_type": "sha1",
-      "communicator": "winrm",
-      "winrm_username": "vagrant",
-      "winrm_password": "vagrant",
-      "winrm_timeout": "12h",
-      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "shutdown_timeout": "1h",
-      "floppy_files": [
-        "answer_files/{{ user `os_name` }}/Autounattend.xml",
-        "floppy/winrm.ps1"
       ]
     }
   ],
@@ -50,12 +59,5 @@
       "elevated_user": "vagrant",
       "elevated_password": "vagrant"
     }
-  ],
-  "variables": {
-    "os_name": "",
-    "headless": "true",
-    "iso_checksum": "",
-    "iso_url": "",
-    "guest_os_type": ""
-  }
+  ]
 }

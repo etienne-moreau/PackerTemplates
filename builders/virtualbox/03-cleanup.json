@@ -50,10 +50,14 @@
             "type": "powershell"
         },
         {
-            "elevated_password": "vagrant",
-            "elevated_user": "vagrant",
-            "script": "scripts/run_ngen.ps1",
-            "type": "powershell"
+	     "elevated_password": "vagrant",
+             "elevated_user": "vagrant",
+             "script": "scripts/run_ngen.ps1",
+             "type": "powershell",
+	     "valid_exit_codes": [
+                0,
+                4294967295
+            ]
         }
     ]
 }
