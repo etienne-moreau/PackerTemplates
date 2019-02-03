@@ -31,15 +31,15 @@ $unattendedXML = @"
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <OOBE>
                 <HideEULAPage>true</HideEULAPage>
-                <ProtectYourPC>1</ProtectYourPC>
-                <NetworkLocation>work</NetworkLocation>
+                <ProtectYourPC>3</ProtectYourPC>
+                <NetworkLocation>Work</NetworkLocation>
                 <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
             </OOBE>
-            <TimeZone>UTC</TimeZone>
+            <TimeZone>Eastern Standard Time</TimeZone>
             <UserAccounts>
                 <AdministratorPassword>
-                    <Value>vagrant</Value>
-                    <PlainText>true</PlainText>
+                    <Value>dgBhAGcAcgBhAG4AdABBAGQAbQBpAG4AaQBzAHQAcgBhAHQAbwByAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+                    <PlainText>false</PlainText>
                 </AdministratorPassword>
                 <LocalAccounts>
                     <LocalAccount wcm:action="add">
@@ -54,22 +54,50 @@ $unattendedXML = @"
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>
+            <RegisteredOrganization>Elekta</RegisteredOrganization>
+            <RegisteredOwner>CEX</RegisteredOwner>
+            <FirstLogonCommands>
+                <SynchronousCommand wcm:action="add">
+                    <CommandLine>C:\Windows\packer\activateFirewall.cmd</CommandLine>
+                    <Order>1</Order>
+                </SynchronousCommand>
+            </FirstLogonCommands>
             <AutoLogon>
-                <Enabled>true</Enabled>
                 <Password>
                     <Value>vagrant</Value>
                     <PlainText>true</PlainText>
                 </Password>
                 <Username>vagrant</Username>
+                <Enabled>true</Enabled>
             </AutoLogon>
         </component>
     </settings>
     <settings pass="specialize">
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <ComputerName>EQTVBase</ComputerName>
+            <OEMInformation>
+                <Model>CEX Vagrant Box</Model>
+                <Manufacturer>Elekta</Manufacturer>
+            </OEMInformation>
+            <RegisteredOrganization>Elekta</RegisteredOrganization>
+            <RegisteredOwner>CEX</RegisteredOwner>
+            <ComputerName>Elekta-Vagrant</ComputerName>
+            <TimeZone>Eastern Time</TimeZone>
         </component>
     </settings>
-    <cpi:offlineImage cpi:source="catalog:c:/_me/codatelier/3rdpartytools/packertemplates/autounattendcreation/install_windows 7 professional.clg" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UserData>
+                <ProductKey>
+                    <Key>RGGW2-K98BT-3X3X9-H6R7M-PYTH6</Key>
+                    <WillShowUI>OnError</WillShowUI>
+                </ProductKey>
+                <AcceptEula>true</AcceptEula>
+                <FullName>vagrant</FullName>
+                <Organization>Elekta Inc.</Organization>
+            </UserData>
+        </component>
+    </settings>
+    <cpi:offlineImage cpi:source="wim:c:/_me/ca/isosrc/en_windows_7_professional_with_sp1_vl_build_x64_dvd_u_677791/sources/install.wim#Windows 7 PROFESSIONAL" xmlns:cpi="urn:schemas-microsoft-com:cpi" />
 </unattend>
 "@
 
@@ -78,9 +106,8 @@ Set-Content -Path "$($packerWindowsDir)\unattended.xml" -Value $unattendedXML
 
 # will run on first boot
 # https://technet.microsoft.com/en-us/library/cc766314(v=ws.10).aspx
-$setupComplete = @"
+$activateFirewall = @"
 netsh advfirewall firewall set rule name="WinRM-HTTP" new action=allow
 "@
 
-New-Item -Path 'C:\Windows\Setup\Scripts' -ItemType Directory -Force
-Set-Content -path "C:\Windows\Setup\Scripts\SetupComplete.cmd" -Value $setupComplete
+Set-Content -path "C:\Windows\packer\activateFirewall.cmd" -Value $activateFirewall

@@ -1,7 +1,7 @@
 {
   "variables": {
     "os_name": "",
-    "headless": "false",
+    "headless": "true",
     "iso_checksum": "",
     "iso_url": "",
     "guest_os_type": ""
@@ -13,8 +13,7 @@
       "disk_size": 81920,
       "floppy_files": [
         "answer_files/{{ user `os_name` }}/Autounattend.xml",
-        "floppy/BootstrapperLogo.bmp",
-        "floppy/SampleScript.cmd",
+        "floppy/update-windows.ps1",
         "floppy/winrm.ps1"
       ],
       "guest_os_type": "{{ user `guest_os_type` }}",
@@ -32,7 +31,8 @@
       "output_directory": "./output-{{ user `os_name` }}-base/",
       "vm_name": "{{ user `os_name` }}-base",
       "vboxmanage": [
-        [ "modifyvm",
+        [
+          "modifyvm",
           "{{.Name}}",
           "--memory",
           "4096"
@@ -60,4 +60,4 @@
       "elevated_password": "vagrant"
     }
   ]
-  }
+}
